@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 project(CwAPI3D.Integration.Test)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 SET(CADLIB_DIR "C:/source/cadlib")

@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        compiler: ['msvc', 'mingw']
+        compiler: ['msvc', 'clang']
 
     steps:
       - name: Checkout code
