@@ -6,7 +6,8 @@ SET(CADLIB_DIR "C:/source/cadlib")
 set(CADWORK_VERSION 30)
 
 INCLUDE_DIRECTORIES(
-        "${CADLIB_DIR}/v_${CADWORK_VERSION}.0/3d/CwAPI3D"
+        "./CwAPI3D/includes"
+        # "${CADLIB_DIR}/v_${CADWORK_VERSION}.0/3d/CwAPI3D"
 )
 
 add_library(${PROJECT_NAME} SHARED

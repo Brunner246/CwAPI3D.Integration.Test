@@ -17,6 +17,7 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory) {
      lLogger->log(lMessage);
         return false;
     }
+
     lLogger->log("ControllerFactory successfully initialized");
     return true;
 }
