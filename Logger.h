@@ -29,7 +29,6 @@ private:
 //    file << "\n";
 //}
 
-
 std::string getCurrentTime() {
     auto now = std::chrono::system_clock::now();
     auto in_time_t = std::chrono::system_clock::to_time_t(now);
@@ -43,7 +42,7 @@ std::string getCurrentTime() {
 class Logger : public LoggerInterface {
 public:
     explicit Logger(const std::string &fileName, std::ios_base::openmode mode) {
-        file.open(fileName, mode); // std::ios::app | std::ios::out
+        file.open(fileName, mode);
     }
 
     Logger(const Logger &other) = delete;
