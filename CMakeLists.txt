@@ -16,6 +16,18 @@ add_library(${PROJECT_NAME} SHARED
         library.cpp
 )
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  set(COMPILER_TYPE "gcc")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(COMPILER_TYPE "clang")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  set(COMPILER_TYPE "msvc")
+endif()
+
+set_target_properties(${PROJECT_NAME}  PROPERTIES
+    OUTPUT_NAME ${PROJECT_NAME}.${COMPILER_TYPE}
+)
+
 target_compile_definitions(${PROJECT_NAME} PRIVATE
         CWAPI3D_PLUGIN_NAME=L"CwAPI3D.Integration.Test"
         CWAPI3D_AUTHOR_NAME=L"Michael Brunner"
