@@ -42,6 +42,7 @@ jobs:
       #     platform: x64 
 
       - name: Configure
+        shell: bash
         run: |
           if [[ "${{ matrix.compiler }}" == "msvc" ]]; then
             cmake -S . -B build -G "Visual Studio 17 2022"
