@@ -11,3 +11,5 @@
 /cmake-build-rewithdebinfo/*
 /.idea
 cmake-build-relwithdebinfo/*
+/CwApi3d/html/*
+/CwApi3d/CwApi30.zip
