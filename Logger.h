@@ -23,6 +23,4 @@ private:
 
 extern LoggerInterface *instance;
 
-std::string getCurrentTime();
-
 LoggerInterface *getLogger(std::string const &aFileName = "log.txt");
