@@ -20,19 +20,19 @@ jobs:
         if: matrix.compiler == 'msvc'
         uses: ilammy/msvc-dev-cmd@v1.13.0
 
-      # - name: Setup MinGW
-      #   if: matrix.compiler == 'mingw'
-      #   uses: msys2/setup-msys2@v2.22.0
-      #   with:
-      #     install: >-
-      #       mingw-w64-x86_64-toolchain
-      #       make
+      - name: Setup MinGW
+        if: matrix.compiler == 'mingw'
+        uses: msys2/setup-msys2@v2.22.0
+        with:
+          install: >-
+            clang-x86_64
+            make
+        # mingw-w64-x86_64-toolchain
 
       - name: Setup GCC
         if: matrix.compiler == 'g++'
         uses: egor-tensin/setup-mingw@v2
         with:
-          version: latest
           platform: x64 
 
       - name: Configure
