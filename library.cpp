@@ -19,5 +19,8 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory *aFactory) {
     }
 
     lLogger->log("ControllerFactory successfully initialized");
+    const auto lVisibleIdentifiableElementIds = aFactory->getElementController()->getVisibleIdentifiableElementIDs();
+    lLogger->log(std::format<std::string>("VisibleIdentifiableElementIDs count: {0}",
+                                          std::to_string(lVisibleIdentifiableElementIds->count())));
     return true;
 }
