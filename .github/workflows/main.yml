@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
 
       - name: Setup MSVC
         if: matrix.compiler == 'msvc'
@@ -22,7 +22,7 @@ jobs:
 
       - name: Setup MinGW
         if: matrix.compiler == 'mingw'
-        uses: msys2/setup-msys2@v2
+        uses: msys2/setup-msys2@v2.22.0
         with:
           install: >-
             mingw-w64-x86_64-toolchain
