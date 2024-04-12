@@ -27,20 +27,6 @@ jobs:
           platform: x64
           version: latest
 
-      # - name: Setup MinGW
-      #   if: matrix.compiler == 'mingw'
-      #   uses: msys2/setup-msys2@v2.22.0
-      #   with:
-      #     install: >-
-      #       mingw-w64-x86_64-toolchain
-      #       make
-
-      # - name: Setup GCC
-      #   if: matrix.compiler == 'g++'
-      #   uses: egor-tensin/setup-mingw@v2
-      #   with:
-      #     platform: x64 
-
       - name: Install Ninja
         run: |
           choco install ninja
@@ -62,6 +48,6 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: compiled-dlls-${{ github.run_number }}
+          name: compiled-dlls-${{ github.run_id }}
           path: |
             **/*.dll
