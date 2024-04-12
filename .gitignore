@@ -9,6 +9,7 @@
 /cmake-build-debug/*
 /cmake-build-release/*
 /cmake-build-rewithdebinfo/*
+/cmake-*/*
 /.idea
 cmake-build-relwithdebinfo/*
 /CwApi3d/html/*

@@ -20,19 +20,26 @@ jobs:
         if: matrix.compiler == 'msvc'
         uses: ilammy/msvc-dev-cmd@v1.13.0
 
-      - name: Setup MinGW
-        if: matrix.compiler == 'mingw'
-        uses: msys2/setup-msys2@v2.22.0
+      - name: Setup Clang
+        if: matrix.compiler == 'clang'
+        uses: egor-tensin/setup-clang@v1.4
         with:
-          install: >-
-            mingw-w64-x86_64-toolchain
-            make
+          platform: x64
+          version: latest
 
-      - name: Setup GCC
-        if: matrix.compiler == 'g++'
-        uses: egor-tensin/setup-mingw@v2
-        with:
-          platform: x64 
+      # - name: Setup MinGW
+      #   if: matrix.compiler == 'mingw'
+      #   uses: msys2/setup-msys2@v2.22.0
+      #   with:
+      #     install: >-
+      #       mingw-w64-x86_64-toolchain
+      #       make
+
+      # - name: Setup GCC
+      #   if: matrix.compiler == 'g++'
+      #   uses: egor-tensin/setup-mingw@v2
+      #   with:
+      #     platform: x64 
 
       - name: Configure
         run: cmake -S . -B build -G "${{ matrix.compiler == 'msvc' && 'Visual Studio 17 2022' || 'MinGW Makefiles' }}"
