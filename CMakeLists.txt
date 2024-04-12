@@ -14,6 +14,9 @@ INCLUDE_DIRECTORIES(
 
 add_library(${PROJECT_NAME} SHARED
         library.cpp
+        elementControllerIT.h
+        elementControllerIT.cpp
+        Logger.cpp
 )
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")

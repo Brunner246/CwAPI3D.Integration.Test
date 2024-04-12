@@ -1,5 +1,5 @@
 #include "CwAPI3D.h"
-#include "Logger.h"
+#include "elementControllerIT.h"
 
 CWAPI3D_PLUGIN bool plugin_x64_init(CwAPI3D::ControllerFactory *aFactory);
 
@@ -11,11 +11,11 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory *aFactory) {
         lLogger->log("ControllerFactory is null");
         return false;
     }
+    aFactory->getUtilityController()->printToConsole(L"ControllerFactory successfully initialized");
 
-    // lLogger->log("ControllerFactory successfully initialized");
-    const auto lVisibleIdentifiableElementIds = aFactory->getElementController()->getVisibleIdentifiableElementIDs();
-    // lLogger->log(std::format<std::string>("VisibleIdentifiableElementIDs count: {0}",
-    //                                       std::to_string(lVisibleIdentifiableElementIds->count())));
-    lLogger->log("VisibleIdentifiableElementIDs count: " + std::to_string(lVisibleIdentifiableElementIds->count()));
+    lLogger->log("ControllerFactory successfully initialized");
+
+    CwApi3dTest::elementControllerIT(*aFactory->getElementController());
+
     return true;
 }
