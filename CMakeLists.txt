@@ -21,8 +21,8 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED
         library.cpp
-        elementControllerIT.h
-        elementControllerIT.cpp
+        cwapi3d.test.controller.h
+        cwapi3d.test.controller.cpp
         Logger.cpp
 )
 

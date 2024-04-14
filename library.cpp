@@ -3,7 +3,7 @@
 //
 
 #include "CwAPI3D.h"
-#include "elementControllerIT.h"
+#include "cwapi3d.test.controller.h"
 
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/basic_file_sink.h"
@@ -21,7 +21,7 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory *aFactory) {
     aFactory->getUtilityController()->printToConsole(L"ControllerFactory successfully initialized");
     spdlog::info("-------- ControllerFactory successfully initialized --------");
 
-    CwApi3dTest::elementControllerIT(*aFactory->getElementController());
+    CwAPI3D::Test::cwApi3dControllerIT(aFactory);
 
     return true;
 }
