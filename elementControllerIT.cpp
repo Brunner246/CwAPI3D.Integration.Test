@@ -3,19 +3,21 @@
 //
 
 #include "elementControllerIT.h"
+#include "spdlog/spdlog.h"
 
-void CwApi3dTest::countVisibleIdentifiableElementIds(CwAPI3D::ElementController &aElementController,
-                                                     LoggerInterface &aLogger) {
 
+void CwApi3dTest::countVisibleIdentifiableElementIds(CwAPI3D::ElementController &aElementController) {
+
+    spdlog::info("countVisibleIdentifiableElementIds started");
     const auto lVisibleIdentifiableElementIds = aElementController.getVisibleIdentifiableElementIDs();
-    aLogger.log("VisibleIdentifiableElementIDs count: " + std::to_string(lVisibleIdentifiableElementIds->count()));
+    spdlog::info("VisibleIdentifiableElementIDs count: {}", lVisibleIdentifiableElementIds->count());
 }
 
 void CwApi3dTest::elementControllerIT(CwAPI3D::ElementController &aElementController) {
-    auto lLogger = getLogger();
-    lLogger->log("elementControllerIT started");
 
-    countVisibleIdentifiableElementIds(aElementController, *lLogger);
+    spdlog::info("-------- elementControllerIT started --------");
 
-    lLogger->log("elementControllerIT finished");
+    countVisibleIdentifiableElementIds(aElementController);
+
+    spdlog::info("-------- elementControllerIT finished --------");
 }

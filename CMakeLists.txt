@@ -7,10 +7,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CADLIB_DIR "C:/source/cadlib")
 set(CADWORK_VERSION 30)
 
+set(SPDLOG_BUILD_EXAMPLE_HO ON)
+
 INCLUDE_DIRECTORIES(
         "./CwAPI3D/includes"
+        ${PROJECT_SOURCE_DIR}
         # "${CADLIB_DIR}/v_${CADWORK_VERSION}.0/3d/CwAPI3D"
 )
+
+if (MSVC)
+  add_definitions(-D_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING)
+endif()
 
 add_library(${PROJECT_NAME} SHARED
         library.cpp
@@ -32,7 +39,10 @@ set_target_properties(${PROJECT_NAME}  PROPERTIES
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
+        # SPDLOG_HEADER_ONLY
         CWAPI3D_PLUGIN_NAME=L"CwAPI3D.Integration.Test"
         CWAPI3D_AUTHOR_NAME=L"Michael Brunner"
         CWAPI3D_AUTHOR_EMAIL=L"brunner@cadwork.swiss"
 )
+
+
