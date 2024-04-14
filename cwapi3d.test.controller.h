@@ -8,10 +8,11 @@
 #include "CwAPI3D.h"
 #include "Logger.h"
 
-namespace CwApi3dTest {
-    void elementControllerIT(CwAPI3D::ElementController &aElementController);
 
-    void countVisibleIdentifiableElementIds(CwAPI3D::ElementController &aElementController);
-}
+    namespace CwAPI3D::Test {
+        void cwApi3dControllerIT(CwAPI3D::ControllerFactory *aControllerFactory);
+    }
+
+
 
 #endif //CWAPI3D_INTEGRATION_TEST_ELEMENTCONTROLLER_IT_H
