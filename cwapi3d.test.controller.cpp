@@ -4,10 +4,8 @@
 
 #include "cwapi3d.test.controller.h"
 #include "spdlog/spdlog.h"
-
-#include <locale>
+#include "cwapi3d.test.utils.h"
 #include <cwchar>
-#include <optional>
 
 void countVisibleIdentifiableElementIds(CwAPI3D::ElementController &aElementController) {
     const auto lVisibleIdentifiableElementIds = aElementController.getVisibleIdentifiableElementIDs();
@@ -28,44 +26,45 @@ void createSnapshot(CwAPI3D::UtilityController &aUtilityController) {
     spdlog::info("Snapshot size: {}", std::wcslen(lSnapshotBase64->data()));
 }
 
-std::optional<std::string> cwApi3dStringToStdString(CwAPI3D::Interfaces::ICwAPI3DString *const lValueKey) {
-    char str[256];
-
-    size_t convertedChars = 0;
-    errno_t err = wcstombs_s(&convertedChars, str, sizeof(str), lValueKey->data(), _TRUNCATE);
-    if (err != 0) {
-        spdlog::error("wcstombs_s failed");
-        return std::nullopt;
-    }
-    return std::string(str);
+void printElementNames(CwAPI3D::ControllerFactory& aControllerFactory, const std::vector<CwAPI3D::elementID>& elementIds) {
+    CwAPI3D::Test::Utils::applyFunctionToElements([&aControllerFactory](CwAPI3D::elementID aElementId) {
+        auto lName = aControllerFactory.getAttributeController()->getName(aElementId);
+        auto lNameAsString = CwAPI3D::Test::Utils::cwApi3dStringToStdString(*lName);
+        lNameAsString ? spdlog::info("Name: {}", lNameAsString.value().c_str()) : spdlog::error("Name is null");
+    }, elementIds);
 }
 
-void CwAPI3D::Test::cwApi3dControllerIT(CwAPI3D::ControllerFactory *aControllerFactory) {
-
-    spdlog::info("-------- cwApi3dControllerIT started --------");
-
-    // Todo: Implement following in separate functions
-    auto lElementMapQuery = aControllerFactory->createElementMapQuery();
-    lElementMapQuery->setBySubgroup();
-    const auto lVisibleElementIds = aControllerFactory->getElementController()->getVisibleIdentifiableElementIDs();
-    const auto lElementIDListMap = aControllerFactory->getElementController()->mapElements(lVisibleElementIds,
-                                                                                           lElementMapQuery);
+void printElementIDListMapInfo(CwAPI3D::Interfaces::ICwAPI3DElementIDListMap* lElementIDListMap) {
     for (auto il{0}; il < lElementIDListMap->count(); il++) {
         const auto lValueKey = lElementIDListMap->valueAt(il);
         const auto lValueElements = lElementIDListMap->itemAt(il);
-        char str[256];
-        auto lValueKeyAsString = cwApi3dStringToStdString(lValueKey);
+        auto lValueKeyAsString = CwAPI3D::Test::Utils::cwApi3dStringToStdString(*lValueKey);
         if (!lValueKeyAsString) {
             spdlog::error("cwApi3dStringToStdString failed");
             return;
         }
         spdlog::info("Key: {} ; value count {}", lValueKeyAsString.value().c_str(), lValueElements->count());
     }
+}
 
-    // act
+void CwAPI3D::Test::cwApi3dControllerIT(CwAPI3D::ControllerFactory *aControllerFactory) {
+    spdlog::info("-------- cwApi3dControllerIT started --------");
+
+    auto lElementMapQuery = aControllerFactory->createElementMapQuery();
+    lElementMapQuery->setBySubgroup();
+    const auto lVisibleElementIds = aControllerFactory->getElementController()->getVisibleIdentifiableElementIDs();
+
     countVisibleIdentifiableElementIds(*aControllerFactory->getElementController());
     createSnapshot(*aControllerFactory->getUtilityController());
 
+    const auto lVisibleElementIdsVector = CwAPI3D::Test::Utils::toVector<CwAPI3D::elementID>(lVisibleElementIds);
+    printElementNames(*aControllerFactory, lVisibleElementIdsVector);
+
+    const auto lMaterialIdList = aControllerFactory->getMaterialController()->getAllMaterials();
+    const auto lMaterialIdListVector = CwAPI3D::Test::Utils::toVector<CwAPI3D::materialID>(lMaterialIdList);
+
+    const auto lElementIDListMap = aControllerFactory->getElementController()->mapElements(lVisibleElementIds, lElementMapQuery);
+    printElementIDListMapInfo(lElementIDListMap);
+
     spdlog::info("-------- cwApi3dControllerIT finished --------");
 }
-

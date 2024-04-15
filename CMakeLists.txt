@@ -24,6 +24,8 @@ add_library(${PROJECT_NAME} SHARED
         cwapi3d.test.controller.h
         cwapi3d.test.controller.cpp
         Logger.cpp
+        cwapi3d.test.utils.cpp
+        cwapi3d.test.utils.h
 )
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
