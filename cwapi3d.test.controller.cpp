@@ -26,24 +26,24 @@ void createSnapshot(CwAPI3D::UtilityController &aUtilityController) {
     spdlog::info("Snapshot size: {}", std::wcslen(lSnapshotBase64->data()));
 }
 
-void printElementNames(CwAPI3D::ControllerFactory& aControllerFactory, const std::vector<CwAPI3D::elementID>& elementIds) {
+void
+printElementNames(CwAPI3D::ControllerFactory &aControllerFactory, const std::vector<CwAPI3D::elementID> &elementIds) {
     CwAPI3D::Test::Utils::applyFunctionToElements([&aControllerFactory](CwAPI3D::elementID aElementId) {
         auto lName = aControllerFactory.getAttributeController()->getName(aElementId);
-        auto lNameAsString = CwAPI3D::Test::Utils::cwApi3dStringToStdString(*lName);
-        lNameAsString ? spdlog::info("Name: {}", lNameAsString.value().c_str()) : spdlog::error("Name is null");
+        lName->length() > 0 ? spdlog::info("\tName: {}", lName->narrowData()) : spdlog::error("Name is null");
     }, elementIds);
 }
 
-void printElementIDListMapInfo(CwAPI3D::Interfaces::ICwAPI3DElementIDListMap* lElementIDListMap) {
+void printElementIDListMapInfo(CwAPI3D::Interfaces::ICwAPI3DElementIDListMap *lElementIDListMap) {
     for (auto il{0}; il < lElementIDListMap->count(); il++) {
         const auto lValueKey = lElementIDListMap->valueAt(il);
         const auto lValueElements = lElementIDListMap->itemAt(il);
-        auto lValueKeyAsString = CwAPI3D::Test::Utils::cwApi3dStringToStdString(*lValueKey);
-        if (!lValueKeyAsString) {
+
+        if (lValueKey->length() < 1) {
             spdlog::error("cwApi3dStringToStdString failed");
             return;
         }
-        spdlog::info("Key: {} ; value count {}", lValueKeyAsString.value().c_str(), lValueElements->count());
+        spdlog::info("Key: {} ; value count {}", lValueKey->narrowData(), lValueElements->count());
     }
 }
 
@@ -63,7 +63,8 @@ void CwAPI3D::Test::cwApi3dControllerIT(CwAPI3D::ControllerFactory *aControllerF
     const auto lMaterialIdList = aControllerFactory->getMaterialController()->getAllMaterials();
     const auto lMaterialIdListVector = CwAPI3D::Test::Utils::toVector<CwAPI3D::materialID>(lMaterialIdList);
 
-    const auto lElementIDListMap = aControllerFactory->getElementController()->mapElements(lVisibleElementIds, lElementMapQuery);
+    const auto lElementIDListMap = aControllerFactory->getElementController()->mapElements(lVisibleElementIds,
+                                                                                           lElementMapQuery);
     printElementIDListMapInfo(lElementIDListMap);
 
     spdlog::info("-------- cwApi3dControllerIT finished --------");

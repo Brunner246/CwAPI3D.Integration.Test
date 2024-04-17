@@ -7,6 +7,12 @@ To achieve this, we employ the `spdlog` library to record the operations and res
 
 [![CI](https://github.com/Brunner246/CwAPI3D.Integration.Test/actions/workflows/main.yml/badge.svg)](https://github.com/Brunner246/CwAPI3D.Integration.Test/actions/workflows/main.yml)
 
+## Cloning the repository
+
+```cmd
+git clone https://github.com/Brunner246/CwAPI3D.Integration.Test.git
+```
+
 ## Running the tests
 
 ```cmd

@@ -20,7 +20,7 @@ if (MSVC)
 endif()
 
 add_library(${PROJECT_NAME} SHARED
-        library.cpp
+        cwapi3d.test.library.cpp
         cwapi3d.test.controller.h
         cwapi3d.test.controller.cpp
         Logger.cpp
