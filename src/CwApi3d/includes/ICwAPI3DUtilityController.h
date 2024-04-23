@@ -13,6 +13,7 @@
 #include "ICwAPI3DElementIDList.h"
 #include "ICwAPI3DString.h"
 #include "ICwAPI3DVertexList.h"
+#include "ICwAPI3DStringList.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -539,6 +540,28 @@ namespace CwAPI3D
       /// @brief Get the geometry of 3d main window
       /// @return windowGeometry
       virtual windowGeometry get3dMainWindowGeometry() = 0;
+
+      /// @brief Gets all keys for project data
+      /// @return list of keys
+      virtual ICwAPI3DStringList* getProjectDataKeys() = 0;
+
+      /// @brief Prompts the user for an integer with a default value
+      /// @param aMessage message
+      /// @param aDefaultValue default value
+      /// @return user integer
+      virtual int32_t getUserIntWithDefaultValue(const character* aMessage, int32_t aDefaultValue) = 0;
+
+      /// @brief Prompts the user for a double with a default value
+      /// @param aMessage message
+      /// @param aDefaultValue default value
+      /// @return user double
+      virtual double getUserDoubleWithDefaultValue(const character* aMessage, double aDefaultValue) = 0;
+
+      /// @brief Prompts the user for a string with a default value
+      /// @param aMessage message
+      /// @param aDefaultValue default value
+      /// @return user string
+      virtual ICwAPI3DString* getUserStringWithDefaultValue(const character* aMessage, const character* aDefaultValue) = 0;
     };
   }
 }

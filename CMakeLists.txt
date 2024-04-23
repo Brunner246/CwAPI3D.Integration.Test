@@ -10,8 +10,8 @@ set(CADWORK_VERSION 30)
 set(SPDLOG_BUILD_EXAMPLE_HO ON)
 
 INCLUDE_DIRECTORIES(
-        "./CwAPI3D/includes"
-        ${PROJECT_SOURCE_DIR}
+        "${PROJECT_SOURCE_DIR}/src/CwAPI3D/includes/"
+        "${PROJECT_SOURCE_DIR}/src/"
         # "${CADLIB_DIR}/v_${CADWORK_VERSION}.0/3d/CwAPI3D"
 )
 
@@ -20,12 +20,12 @@ if (MSVC)
 endif()
 
 add_library(${PROJECT_NAME} SHARED
-        cwapi3d.test.library.cpp
-        cwapi3d.test.controller.h
-        cwapi3d.test.controller.cpp
-        Logger.cpp
-        cwapi3d.test.utils.cpp
-        cwapi3d.test.utils.h
+        src/cwapi3d_test_library.cpp
+        src/cwapi3d_test_controller.h
+        src/cwapi3d_test_controller.cpp
+        src/Logger.cpp
+        src/cwapi3d_test_utils.cpp
+        src/cwapi3d_test_utils.h
 )
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")

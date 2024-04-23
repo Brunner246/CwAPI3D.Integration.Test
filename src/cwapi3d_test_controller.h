@@ -9,9 +9,10 @@
 #include "Logger.h"
 
 
-    namespace CwAPI3D::Test {
-        void cwApi3dControllerIT(CwAPI3D::ControllerFactory *aControllerFactory);
-    }
+namespace CwAPI3D::Test
+{
+  void cwApi3dControllerIT(CwAPI3D::ControllerFactory* aControllerFactory);
+}
 
 
 

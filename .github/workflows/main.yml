@@ -35,11 +35,11 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ matrix.compiler }}" == "msvc" ]]; then
-            cmake -S . -B build -G "Visual Studio 17 2022"
+            cmake -S . -B build -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release
           elif [[ "${{ matrix.compiler }}" == "clang" ]]; then
-            cmake -S . -B build -G "Ninja" -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
+            cmake -S . -B build -G "Ninja" -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release
           else
-            cmake -S . -B build -G "MinGW Makefiles"
+            cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
           fi
 
       - name: Build
