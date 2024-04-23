@@ -878,6 +878,12 @@ namespace CwAPI3D
       /// @param aNumber user-attribute number
       /// @param aVisibility state
       virtual void setAttributeVisibilityInModifyWindow(uint32_t aNumber, bool aVisibility) = 0;
+
+      /// @brief Sets the cutting set on the elements. The cutting set is applied with `cutElementsWithOvermeasure`
+      /// @param aElementIDList List of element IDs.
+      /// @param aCuttingSetName Name of the cutting set to apply.
+      /// @return `true` if the cutting set was successfully applied, `false` otherwise.
+      virtual bool setCuttingSet(ICwAPI3DElementIDList* aElementIDList, const character* aCuttingSetName) = 0;
     };
   }
 }

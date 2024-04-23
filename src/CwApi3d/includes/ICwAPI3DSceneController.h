@@ -92,6 +92,23 @@ namespace CwAPI3D
       /// @param aBlue Blue
       /// @param aAlpha Alpha from 0 to 255
       virtual void setGroupTabColor(const character* aSceneGroupName, int aRed, int aGreen, int aBlue, int aAlpha = 255) = 0;
+      /// @brief Rename the scene group
+      /// @param aOldName existing scene group name
+      /// @param aNewName new scene group name
+      virtual void renameSceneGroup(const character* aOldName, const character* aNewName) = 0;
+      /// @brief Gets the index of a scene group by its name.
+      /// @param aSceneGroupName existing scene group name
+      /// @return the index of the group
+      virtual uint64_t getGroupIndexByName(const character* aSceneGroupName) = 0;
+      /// @brief Rename the scene group by its index.
+      /// @param  aGroupIndex group index
+      /// @param aNewName new scene group name
+      virtual void renameSceneGroupByIndex(uint64_t aGroupIndex, const character* aNewName) = 0;
+      /// @brief Groups the scenes to a scene group and sets the name of the new group.
+      /// @param  aSceneNames scene names
+      /// @param aGroupName name of the new group
+      /// @return index of new group
+      virtual uint64_t groupScenesWithName(ICwAPI3DStringList* aSceneNames, const character* aGroupName) = 0;
     };
   }
 }

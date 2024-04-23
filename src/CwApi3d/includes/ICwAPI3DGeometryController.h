@@ -435,54 +435,96 @@ namespace CwAPI3D
       /// @param aSecondFacet second facet
       /// @return facet coplanarity
       virtual bool areFacetsCoplanar(ICwAPI3DVertexList* aFirstFacet, ICwAPI3DVertexList* aSecondFacet) = 0;
+
       /// @brief Gets the value of option RoundMachineRoughPartNegativeWidth
       /// @param aID elementID
       /// @return bool value
       virtual bool getRoundMachineRoughPartNegativeWidth(elementID aID) = 0;
+
       /// @brief Sets the value of option RoundMachineRoughPartNegativeWidth
       /// @param aElements elementID List
       /// @param aValue new Value
       virtual void setRoundMachineRoughPartNegativeWidth(ICwAPI3DElementIDList* aElements, bool aValue) = 0;
+
       /// @brief Gets the value of option RoundMachineRoughPartPositiveWidth
       /// @param aID elementID
       /// @return bool value
       virtual bool getRoundMachineRoughPartPositiveWidth(elementID aID) = 0;
+
       /// @brief Sets the value of option RoundMachineRoughPartPositiveWidth
       /// @param aElements elementID List
       /// @param aValue new Value
       virtual void setRoundMachineRoughPartPositiveWidth(ICwAPI3DElementIDList* aElements, bool aValue) = 0;
+
       /// @brief Gets the value of option RoundMachineRoughPartNegativeHeight
       /// @param aID elementID
       /// @return bool value
       virtual bool getRoundMachineRoughPartNegativeHeight(elementID aID) = 0;
+
       /// @brief Sets the value of option RoundMachineRoughPartNegativeHeight
       /// @param aElements elementID List
       /// @param aValue new Value
       virtual void setRoundMachineRoughPartNegativeHeight(ICwAPI3DElementIDList* aElements, bool aValue) = 0;
+
       /// @brief Gets the value of option RoundMachineRoughPartPositiveHeight
       /// @param aID elementID
       /// @return bool value
       virtual bool getRoundMachineRoughPartPositiveHeight(elementID aID) = 0;
+
       /// @brief Sets the value of option RoundMachineRoughPartPositiveHeight
       /// @param aElements elementID List
       /// @param aValue new Value
       virtual void setRoundMachineRoughPartPositiveHeight(ICwAPI3DElementIDList* aElements, bool aValue) = 0;
+
       /// @brief Gets the value of option RoundMachineRoughPartNegativeLength
       /// @param aID elementID
       /// @return bool value
       virtual bool getRoundMachineRoughPartNegativeLength(elementID aID) = 0;
+
       /// @brief Sets the value of option RoundMachineRoughPartNegativeLength
       /// @param aElements elementID List
       /// @param aValue new Value
       virtual void setRoundMachineRoughPartNegativeLength(ICwAPI3DElementIDList* aElements, bool aValue) = 0;
+
       /// @brief Gets the value of option RoundMachineRoughPartPositiveLength
       /// @param aID elementID
       /// @return bool value
       virtual bool getRoundMachineRoughPartPositiveLength(elementID aID) = 0;
+
       /// @brief Sets the value of option RoundMachineRoughPartPositiveLength
       /// @param aElements elementID List
       /// @param aValue new Value
       virtual void setRoundMachineRoughPartPositiveLength(ICwAPI3DElementIDList* aElements, bool aValue) = 0;
+
+      /// @brief Get the standard element width
+      /// @param aStandardElementGuid
+      /// @return standard element width
+      virtual double getStandardElementWidthFromGuid(const character* aStandardElementGuid) = 0;
+
+      /// @brief Get the standard element height
+      /// @param aStandardElementGuid
+      /// @return standard element height
+      virtual double getStandardElementHeightFromGuid(const character* aStandardElementGuid) = 0;
+
+      /// @brief Get the standard element length
+      /// @param aStandardElementGuid
+      /// @return standard element length
+      virtual double getStandardElementLengthFromGuid(const character* aStandardElementGuid) = 0;
+
+      /// @brief Get the standard element width
+      /// @param aStandardElementName
+      /// @return  standard element width
+      virtual double getStandardElementWidthFromName(const character* aStandardElementName) = 0;
+
+      /// @brief Get the standard element height
+      /// @param aStandardElementName
+      /// @return standard element height
+      virtual double getStandardElementHeightFromName(const character* aStandardElementName) = 0;
+
+      /// @brief Get the standard element length
+      /// @param aStandardElementName
+      /// @return standard element length
+      virtual double getStandardElementLengthFromName(const character* aStandardElementName) = 0;
     };
   }
 }
