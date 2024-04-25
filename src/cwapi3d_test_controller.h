@@ -6,7 +6,6 @@
 #define CWAPI3D_INTEGRATION_TEST_ELEMENTCONTROLLER_IT_H
 
 #include "CwAPI3D.h"
-#include "Logger.h"
 
 
 namespace CwAPI3D::Test
