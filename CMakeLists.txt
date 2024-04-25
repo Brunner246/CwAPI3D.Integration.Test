@@ -23,7 +23,6 @@ add_library(${PROJECT_NAME} SHARED
         src/cwapi3d_test_library.cpp
         src/cwapi3d_test_controller.h
         src/cwapi3d_test_controller.cpp
-        src/Logger.cpp
         src/cwapi3d_test_utils.cpp
         src/cwapi3d_test_utils.h
 )

@@ -16,7 +16,7 @@ void countVisibleIdentifiableElementIds(CwAPI3D::ElementController& aElementCont
     spdlog::error("{}: VisibleIdentifiableElementIDs is null", __FUNCTION__);
     return;
   }
-  spdlog::info("VisibleIdentifiableElementIDs count: {}", lVisibleIdentifiableElementIds->count());
+  spdlog::info("Controller: {} Function: {}: Description: {}", "ElementController", "getVisibleIdentifiableElementIDs", lVisibleIdentifiableElementIds->count());
 }
 
 void createSnapshot(CwAPI3D::UtilityController& aUtilityController)
@@ -24,27 +24,28 @@ void createSnapshot(CwAPI3D::UtilityController& aUtilityController)
   const auto lSnapshotBase64 = aUtilityController.createSnapshot(L"PNG");
   if (lSnapshotBase64 == nullptr)
   {
-    spdlog::error("{}: SnapshotBytes is null", __FUNCTION__);
+    spdlog::error("Controller: {} Function: {}: Description: {}", "UtilityController", "createSnapshot", "snapshot is null");
     return;
   }
   aUtilityController.printToConsole(lSnapshotBase64->data());
-  spdlog::info("Snapshot size: {}", std::wcslen(lSnapshotBase64->data()));
+  spdlog::info("Controller: {} Function: {}: Description: {}", "UtilityController", "createSnapshot", std::wcslen(lSnapshotBase64->data()));
 }
 
 void printElementNames(CwAPI3D::ControllerFactory& aControllerFactory, const std::vector<CwAPI3D::elementID>& elementIds)
 {
-  CwAPI3D::Test::Utils::applyFunctionToElements([&aControllerFactory](const CwAPI3D::elementID aElementId) {
+  auto lNameGetter = [&aControllerFactory](const CwAPI3D::elementID aElementId) {
     if (const auto lName = aControllerFactory.getAttributeController()->getName(aElementId);
-        lName->length() < 1)
+        lName == nullptr)
     {
-      spdlog::error("{}: Name is null", __FUNCTION__);
+      spdlog::error("Controller: {} Function: {}: Description: {}", "AttributeController", "getName", "Name is null");
     }
     else
     {
-      spdlog::info("\tName: {}", lName->narrowData());
+      spdlog::info("Controller: {} Function: {}: Description: {}", "AttributeController", "getName", lName->narrowData());
     }
-  },
-                                                elementIds);
+  };
+
+  CwAPI3D::Test::Utils::applyFunctionToElements(lNameGetter, elementIds);
 }
 
 void printElementIDListMapInfo(CwAPI3D::Interfaces::ICwAPI3DElementIDListMap* lElementIDListMap)
@@ -56,10 +57,10 @@ void printElementIDListMapInfo(CwAPI3D::Interfaces::ICwAPI3DElementIDListMap* lE
 
     if (lValueKey->length() < 1 || lValueElements == nullptr)
     {
-      spdlog::error("{}: Key is null", __FUNCTION__);
+      spdlog::error("Controller: {} Function: {}: Description: {}", "CwAPI3D", "ElementIDListMap", "no key or value");
       return;
     }
-    spdlog::info("Key: {} ; value count {}", lValueKey->narrowData(), lValueElements->count());
+    spdlog::info("Controller: {} Function: {}: Description: key: {} value(count):{}", "CwAPI3D", "ElementIDListMap", lValueKey->narrowData(), lValueElements->count());
   }
 }
 
@@ -68,17 +69,35 @@ void import3dcFile(CwAPI3D::FileController& aFileController, CwAPI3D::Interfaces
   const auto lFile = aFileController.import3dcFileWithOptions(aFilePath.c_str(), api3DImport3DcOptions);
   if (lFile == nullptr)
   {
-    spdlog::error("{}: File is null", __FUNCTION__);
+    spdlog::error("Controller: {} Function: {}: Description: {}", "FileController", "import3dcFileWithOptions", "File is null");
     return;
   }
   if (lFile->count() < 1)
   {
-    spdlog::error("{}: File count is 0", __FUNCTION__);
+    spdlog::error("Controller: {} Function: {}: Description: {}", "FileController", "import3dcFileWithOptions", "File content is empty");
     return;
   }
-  spdlog::info("File: {}", lFile->count());
+  if (lFile->count() != 3)
+  {
+    spdlog::error("Controller: {} Function: {}: Description: {}", "FileController", "import3dcFileWithOptions", "File content is wrong - 3 elements expected");
+  }
+  spdlog::info("Controller: {} Function: {}: Description: {}", "FileController", "import3dcFileWithOptions", lFile->count());
 }
 
+auto buildPathTo3dcFile(CwAPI3D::ControllerFactory* aControllerFactory)
+{
+  const auto lPluginPath = aControllerFactory->getUtilityController()->getPluginPath();
+  std::filesystem::path lFilePath = lPluginPath->data();
+  lFilePath /= "static-symbol.3dc";
+  return lFilePath;
+}
+auto set3dcImportFileOptions(CwAPI3D::ControllerFactory* aControllerFactory)
+{
+  const auto lApi3dImport3DcOptions = aControllerFactory->createImport3dcOptions();
+  lApi3dImport3DcOptions->setImportExportSolids(true);
+  lApi3dImport3DcOptions->setImportSavedScenes(true);
+  return lApi3dImport3DcOptions;
+}
 void CwAPI3D::Test::cwApi3dControllerIT(CwAPI3D::ControllerFactory* aControllerFactory)
 {
   spdlog::info("-------- cwApi3dControllerIT started --------");
@@ -100,13 +119,8 @@ void CwAPI3D::Test::cwApi3dControllerIT(CwAPI3D::ControllerFactory* aControllerF
                                                                                          lElementMapQuery);
   printElementIDListMapInfo(lElementIDListMap);
 
-  const auto lPluginPath = aControllerFactory->getUtilityController()->getPluginPath();
-  std::filesystem::path lFilePath = lPluginPath->data();
-  lFilePath /= "static-symbol.3dc";
-  const auto lApi3dImport3DcOptions = aControllerFactory->createImport3dcOptions();
-  lApi3dImport3DcOptions->setImportExportSolids(true);
-  lApi3dImport3DcOptions->setImportSavedScenes(true);
-  import3dcFile(*aControllerFactory->getFileController(), lApi3dImport3DcOptions, lFilePath);
+  const auto lApi3dImport3DcOptions = set3dcImportFileOptions(aControllerFactory);
+  import3dcFile(*aControllerFactory->getFileController(), lApi3dImport3DcOptions, buildPathTo3dcFile(aControllerFactory));
 
   spdlog::info("-------- cwApi3dControllerIT finished --------");
 }
