@@ -64,7 +64,7 @@ void printElementIDListMapInfo(CwAPI3D::Interfaces::ICwAPI3DElementIDListMap* lE
   }
 }
 
-void import3dcFile(CwAPI3D::FileController& aFileController, CwAPI3D::Interfaces::ICwAPI3DImport3dcOptions* api3DImport3DcOptions, const std::filesystem::path& aFilePath)
+void import3dcFile(CwAPI3D::FileController& aFileController, CwAPI3D::Interfaces::ICwAPI3DImport3dcOptions* api3DImport3DcOptions, const std::filesystem::path& aFilePath, const std::shared_ptr<spdlog::logger>& aLogger)
 {
   const auto lFile = aFileController.import3dcFileWithOptions(aFilePath.c_str(), api3DImport3DcOptions);
   if (lFile == nullptr)
@@ -79,6 +79,7 @@ void import3dcFile(CwAPI3D::FileController& aFileController, CwAPI3D::Interfaces
   }
   if (lFile->count() != 3)
   {
+    SPDLOG_LOGGER_CALL(aLogger.get(), spdlog::level::err, "Hello, {}!", "world");
     spdlog::error("Controller: {} Function: {}: Description: {}", "FileController", "import3dcFileWithOptions", "File content is wrong - 3 elements expected");
   }
   spdlog::info("Controller: {} Function: {}: Description: {}", "FileController", "import3dcFileWithOptions", lFile->count());
@@ -98,7 +99,7 @@ auto set3dcImportFileOptions(CwAPI3D::ControllerFactory* aControllerFactory)
   lApi3dImport3DcOptions->setImportSavedScenes(true);
   return lApi3dImport3DcOptions;
 }
-void CwAPI3D::Test::cwApi3dControllerIT(CwAPI3D::ControllerFactory* aControllerFactory)
+void CwAPI3D::Test::cwApi3dControllerIT(CwAPI3D::ControllerFactory* aControllerFactory, const std::shared_ptr<spdlog::logger>& aLogger)
 {
   spdlog::info("-------- cwApi3dControllerIT started --------");
 
@@ -120,7 +121,7 @@ void CwAPI3D::Test::cwApi3dControllerIT(CwAPI3D::ControllerFactory* aControllerF
   printElementIDListMapInfo(lElementIDListMap);
 
   const auto lApi3dImport3DcOptions = set3dcImportFileOptions(aControllerFactory);
-  import3dcFile(*aControllerFactory->getFileController(), lApi3dImport3DcOptions, buildPathTo3dcFile(aControllerFactory));
+  import3dcFile(*aControllerFactory->getFileController(), lApi3dImport3DcOptions, buildPathTo3dcFile(aControllerFactory), const std::shared_ptr<spdlog::logger>& aLogger);
 
   spdlog::info("-------- cwApi3dControllerIT finished --------");
 }

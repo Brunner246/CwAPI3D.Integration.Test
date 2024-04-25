@@ -3,6 +3,7 @@
 //
 
 #include "CwAPI3D.h"
+#include "SpdlogWrapper.h"
 #include "cwapi3d_test_controller.h"
 
 #include "spdlog/spdlog.h"
@@ -29,20 +30,23 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
     std::filesystem::create_directory(lFilePath);
   }
 
-  const auto lLoggerFilePath = fmt::format<std::string>("{}/cwapi3d_logger.json", lFilePath.string());
-  // spdlog::set_pattern("{\n \"log\": [");
-  const auto lLogger = spdlog::basic_logger_mt("cwapi3d_logger", lLoggerFilePath);
-  spdlog::set_default_logger(lLogger);
+  const auto lLoggerFilePath = fmt::format<std::string>("{}/CwAPI3D_Logger.json", lFilePath.string());
 
-  lLogger->set_pattern(R"({"time": "%Y-%m-%d %H:%M:%S.%e", "level": "%^%l%$", "message": "%v"})");
+  // SpdlogWrapper::getInstance().init("CwAPI3D_Logger", lLoggerFilePath);
+
+  const auto lLogger = spdlog::basic_logger_mt("CwAPI3D_Logger", lLoggerFilePath);
+  spdlog::set_default_logger(lLogger);
+  // spdlog::sinks::wincolor_stdout_sink
+  lLogger->set_level(spdlog::level::trace); // warn
+
+  lLogger->set_pattern(R"({"time": "%Y-%m-%d %H:%M:%S.%e", "level": "%^%l%$", "source location": "%@", "message": "%v"})");
+
+  SPDLOG_LOGGER_CALL(lLogger.get(), spdlog::level::err, "Hello, {}!", "world");
 
   aFactory->getUtilityController()->printToConsole(L"ControllerFactory successfully initialized");
   spdlog::info("-------- ControllerFactory successfully initialized --------");
 
-  CwAPI3D::Test::cwApi3dControllerIT(aFactory);
-
-  // const std::string jsonpattern = {R"({"time": "%Y-%m-%dT%H:%M:%S.%f%z", "name": "%n", "level": "%^%l%$", "process": %P, "thread": %t, "message": "%v"},)"};
-  // spdlog::set_pattern(jsonpattern);
+  CwAPI3D::Test::cwApi3dControllerIT(aFactory, lLogger);
 
   return true;
 }

@@ -25,6 +25,8 @@ add_library(${PROJECT_NAME} SHARED
         src/cwapi3d_test_controller.cpp
         src/cwapi3d_test_utils.cpp
         src/cwapi3d_test_utils.h
+        src/SpdlogWrapper.h
+        src/SpdlogWrapper.cpp
 )
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -40,7 +42,7 @@ set_target_properties(${PROJECT_NAME}  PROPERTIES
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
-        # SPDLOG_HEADER_ONLY
+        # SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE
         CWAPI3D_PLUGIN_NAME=L"CwAPI3D.Integration.Test"
         CWAPI3D_AUTHOR_NAME=L"Michael Brunner"
         CWAPI3D_AUTHOR_EMAIL=L"brunner@cadwork.swiss"

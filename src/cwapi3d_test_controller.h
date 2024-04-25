@@ -7,10 +7,12 @@
 
 #include "CwAPI3D.h"
 
+#include <memory>
+#include "spdlog/spdlog.h"
 
 namespace CwAPI3D::Test
 {
-  void cwApi3dControllerIT(CwAPI3D::ControllerFactory* aControllerFactory);
+  void cwApi3dControllerIT(CwAPI3D::ControllerFactory* aControllerFactory, const std::shared_ptr<spdlog::logger>& aLogger);
 }
 
 
