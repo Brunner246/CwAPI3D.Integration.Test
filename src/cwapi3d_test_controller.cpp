@@ -13,7 +13,7 @@ void countVisibleIdentifiableElementIds(CwAPI3D::ElementController& aElementCont
   const auto lVisibleIdentifiableElementIds = aElementController.getVisibleIdentifiableElementIDs();
   if (lVisibleIdentifiableElementIds == nullptr)
   {
-    spdlog::error("{}: VisibleIdentifiableElementIDs is null", __FUNCTION__);
+    spdlog::error("Controller: {} Function: {}: Description: {}", "ElementController", "getVisibleIdentifiableElementIDs", "ElementIds are null");
     return;
   }
   spdlog::info("Controller: {} Function: {}: Description: {}", "ElementController", "getVisibleIdentifiableElementIDs", lVisibleIdentifiableElementIds->count());
