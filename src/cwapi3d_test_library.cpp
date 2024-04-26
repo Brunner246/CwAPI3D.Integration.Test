@@ -3,7 +3,7 @@
 //
 
 #include "CwAPI3D.h"
-#include "SpdlogWrapper.h"
+#include "cwapi3d_spdlog_wrapper.h"
 #include "cwapi3d_test_controller.h"
 
 #include "spdlog/spdlog.h"
@@ -32,7 +32,11 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
 
   const auto lLoggerFilePath = fmt::format<std::string>("{}/CwAPI3D_Logger.json", lFilePath.string());
 
-  // SpdlogWrapper::getInstance().init("CwAPI3D_Logger", lLoggerFilePath);
+  const auto lLoggerFilePath2 = fmt::format<std::string>("{}/CwAPI3D_Logger2.json", lFilePath.string());
+
+  const SpdlogWrapper& logger = SpdlogWrapper::getInstance("myLogger2", lLoggerFilePath2);
+  logger.setPattern(R"({"time": "%Y-%m-%d %H:%M:%S.%e", "level": "%^%l%$", "source location": "%@", "message": "%v"})");
+  logger.info("Hello, world!");
 
   const auto lLogger = spdlog::basic_logger_mt("CwAPI3D_Logger", lLoggerFilePath);
   spdlog::set_default_logger(lLogger);
