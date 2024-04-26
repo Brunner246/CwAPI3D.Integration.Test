@@ -31,6 +31,10 @@ void SpdlogWrapper::setPattern(const std::string& pattern) const
 {
   logger->set_pattern(pattern);
 }
+void SpdlogWrapper::setLogLevel(const spdlog::level::level_enum level) const
+{
+  logger->set_level(level);
+}
 
 void SpdlogWrapper::info(const std::string& msg) const
 {

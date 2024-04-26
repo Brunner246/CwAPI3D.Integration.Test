@@ -17,7 +17,11 @@ public:
   static SpdlogWrapper& getInstance(const std::string& loggerName, const std::string& fileName);
 
   void setPattern(const std::string& pattern) const;
+
+  void setLogLevel(spdlog::level::level_enum level) const;
+
   void info(const std::string& msg) const;
+
   void error(const std::string& msg) const;
 
 private:

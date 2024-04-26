@@ -35,6 +35,7 @@ bool plugin_x64_init(CwAPI3D::ControllerFactory* aFactory)
   const auto lLoggerFilePath2 = fmt::format<std::string>("{}/CwAPI3D_Logger2.json", lFilePath.string());
 
   const SpdlogWrapper& logger = SpdlogWrapper::getInstance("myLogger2", lLoggerFilePath2);
+  logger.setLogLevel(spdlog::level::trace);
   logger.setPattern(R"({"time": "%Y-%m-%d %H:%M:%S.%e", "level": "%^%l%$", "source location": "%@", "message": "%v"})");
   logger.info("Hello, world!");
 
