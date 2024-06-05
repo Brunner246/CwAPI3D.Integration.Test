@@ -8,8 +8,12 @@
 
 #include <optional>
 #include <algorithm>
-#include "ICwAPI3DString.h"
+#include <ICwAPI3DString.h>
 #include "CwAPI3D.h"
+
+#include <string>
+#include <vector>
+
 
 namespace CwAPI3D::Test::Utils {
 

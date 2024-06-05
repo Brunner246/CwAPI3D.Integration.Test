@@ -1,6 +1,10 @@
 name: CI
 
 on:
+  schedule:
+    - cron: '30 12 * * 3'
+  push:
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -22,7 +26,7 @@ jobs:
 
       - name: Setup Clang
         if: matrix.compiler == 'clang'
-        uses: egor-tensin/setup-clang@v1.4
+        uses: KyleMayes/install-llvm-action@v2.0.3
         with:
           platform: x64
           version: latest
